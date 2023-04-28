@@ -4,12 +4,26 @@ import Filter from "../../components/Filter";
 import ProductCard from "../../components/ProductCard/indx";
 import useAxios from "../../api";
 import Loading from "../../components/Loading";
+import { useState, useMemo } from "react";
 
 const Products = () => {
+  const [filterData, setFilterData] = useState({});
   const { data, loading } = useAxios();
+
+  const products = useMemo(() => {
+    const newArr = [...(data?.data || [])];
+
+    newArr.filter((item) => {
+      return item;
+    });
+
+    return newArr;
+  }, [data]);
+
   if (loading) {
     return <Loading />;
   }
+
   return (
     <Grid container sx={{ height: 1, width: 1 }}>
       <Grid
@@ -25,7 +39,7 @@ const Products = () => {
           flexDirection: "row",
         }}
       >
-        <Filter />
+        <Filter filterData={filterData} setFilterData={setFilterData} />
       </Grid>
       <Grid item xs={12} md={9} sx={{ p: 2, height: 1, overflow: "auto" }}>
         <SearchBox />
@@ -37,7 +51,7 @@ const Products = () => {
             justifyContent: "center",
           }}
         >
-          {data?.data.map((product, index) => (
+          {products?.map((product, index) => (
             <Box key={index}>
               <ProductCard product={product} />
             </Box>

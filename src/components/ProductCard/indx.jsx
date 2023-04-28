@@ -10,7 +10,13 @@ const ProductCard = ({ product }) => {
       const prevArr = [...prev];
       const index = prev.findIndex((item) => item.id === product.id);
       if (index !== -1) {
-        prevArr[index] = { ...product, count: prevArr[index].count + 1 };
+        if (prevArr[index].quantity === prevArr[index].count) {
+          alert(
+            `sorry you can't add more then${prevArr[index].quantity} quantity`
+          );
+        } else {
+          prevArr[index] = { ...product, count: prevArr[index].count + 1 };
+        }
       } else {
         prevArr.push({ ...product, count: 1 });
       }

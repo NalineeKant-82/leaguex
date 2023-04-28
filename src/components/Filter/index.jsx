@@ -10,36 +10,51 @@ import React from "react";
 
 const Test = [
   {
-    name: "Colors",
+    name: "colors",
     childrens: [
-      { label: "Red", value: "red" },
-      { label: "Green", value: "green" },
+      { label: "Red", value: "Red" },
+      { label: "Blue", value: "Blue" },
+      { label: "Green", value: "Green" },
+      { label: "Black", value: "Black" },
     ],
   },
   {
-    name: "Gender",
+    name: "gender",
     childrens: [
-      { label: "Men", value: "men" },
-      { label: "Women", value: "women" },
+      { label: "Men", value: "Men" },
+      { label: "Women", value: "Women" },
     ],
   },
   {
-    name: "Price",
+    name: "price",
     childrens: [
-      { label: "Men", value: "men" },
-      { label: "Women", value: "women" },
+      { label: 0, value: 0 },
+      { label: "Rs250", value: 250 },
+      { label: "Rs450", value: 250 },
     ],
   },
   {
-    name: "Type",
+    name: "type",
     childrens: [
-      { label: "Men", value: "men" },
-      { label: "Women", value: "women" },
+      { label: "Polo", value: "Polo" },
+      { label: "Hoodie", value: "Hoodie" },
+      { label: "Basic", value: "Basic" },
     ],
   },
 ];
 
-const Filter = () => {
+const Filter = ({ filterData, setFilterData }) => {
+  const handleChange = (value, pKey, cKey) => {
+    setFilterData((prev) => {
+      let newObj = { ...prev };
+      newObj[pKey] = newObj[pKey]
+        ? { ...newObj[pKey], [cKey]: value }
+        : { [cKey]: value };
+
+      return newObj;
+    });
+  };
+
   return (
     <Paper
       elevation={3}
@@ -52,18 +67,35 @@ const Filter = () => {
         flexDirection: "column",
       }}
     >
-      {Test.map((i) => {
+      {Test.map((type) => {
         return (
-          <Box key={`cat${i.name}`}>
-            <Typography>{i.name}</Typography>
+          <Box key={`cat${type.name}`}>
+            <Typography>{type.name}</Typography>
             <FormGroup sx={{ ml: 0.5 }}>
-              {i.childrens.map((item) => (
-                <FormControlLabel
-                  key={`che${item.label}`}
-                  control={<Checkbox size="small" />}
-                  label={item.label}
-                />
-              ))}
+              {type.childrens.map((item) => {
+                const keys = filterData[type.name];
+                const values = keys && keys[item.value];
+
+                return (
+                  <FormControlLabel
+                    key={`che${item.label}`}
+                    control={
+                      <Checkbox
+                        checked={values}
+                        onChange={(event) =>
+                          handleChange(
+                            event.target.checked,
+                            type.name,
+                            item.value
+                          )
+                        }
+                        size="small"
+                      />
+                    }
+                    label={item.label}
+                  />
+                );
+              })}
             </FormGroup>
           </Box>
         );
