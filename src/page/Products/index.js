@@ -24,7 +24,7 @@ const Products = () => {
           }
         })
       );
-      console.log(foundData[1]);
+      // console.log(foundData[1]);
       return foundData[1];
 
     };
