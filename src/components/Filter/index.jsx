@@ -10,7 +10,7 @@ import React from "react";
 
 const Test = [
   {
-    name: "colors",
+    name: "color",
     childrens: [
       { label: "Red", value: "Red" },
       { label: "Blue", value: "Blue" },
@@ -28,9 +28,9 @@ const Test = [
   {
     name: "price",
     childrens: [
-      { label: 0, value: 0 },
-      { label: "Rs250", value: 250 },
-      { label: "Rs450", value: 250 },
+      { label: "0-Rs250", value: 0 },
+      { label: "Rs250-Rs450", value: 250 },
+      { label: "Rs450", value: 450 },
     ],
   },
   {

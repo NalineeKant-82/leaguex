@@ -5,20 +5,45 @@ import ProductCard from "../../components/ProductCard/indx";
 import useAxios from "../../api";
 import Loading from "../../components/Loading";
 import { useState, useMemo } from "react";
+import { filterItem } from "../../utils/filter";
 
 const Products = () => {
   const [filterData, setFilterData] = useState({});
+  const [search, setSearch] = useState("");
   const { data, loading } = useAxios();
 
   const products = useMemo(() => {
-    const newArr = [...(data?.data || [])];
+    const filteritems = filterItem(data?.data, filterData);
+    const searchItemsProduct = () => {
+      const searchStrArr = search.split(" ");
 
-    newArr.filter((item) => {
-      return item;
-    });
+      const foundData = searchStrArr.map((item) =>
+        filteritems.filter((filterItem) => {
+          if (filterItem.name.toUpperCase().includes(item.toUpperCase())|| filterItem.gender.toUpperCase()===item.toUpperCase()||filterItem.type.toUpperCase()===item.toUpperCase()) {
+            return filterItem;
+          }
+        })
+      );
+      console.log(foundData[1]);
+      return foundData[1];
 
-    return newArr;
-  }, [data]);
+    };
+    const searchItems =
+      search.length > 0
+        ? search.includes(" ")
+          ? searchItemsProduct()
+          : filteritems.filter((item) => {
+              return (
+                item.name.toUpperCase().indexOf(search.toUpperCase()) !== -1 ||
+                item.gender.toUpperCase().indexOf(search.toUpperCase()) !== -1||
+                item.type.toUpperCase().indexOf(search.toUpperCase()) !== -1
+
+              );
+            })
+        : filteritems;
+
+    return searchItems;
+  }, [data, filterData, search]);
 
   if (loading) {
     return <Loading />;
@@ -42,7 +67,7 @@ const Products = () => {
         <Filter filterData={filterData} setFilterData={setFilterData} />
       </Grid>
       <Grid item xs={12} md={9} sx={{ p: 2, height: 1, overflow: "auto" }}>
-        <SearchBox />
+        <SearchBox value={search} onChange={setSearch} />
         <Box
           sx={{
             display: "flex",
