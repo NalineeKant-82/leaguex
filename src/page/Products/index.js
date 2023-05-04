@@ -19,14 +19,19 @@ const Products = () => {
 
       const foundData = searchStrArr.map((item) =>
         filteritems.filter((filterItem) => {
-          if (filterItem.name.toUpperCase().includes(item.toUpperCase())|| filterItem.gender.toUpperCase()===item.toUpperCase()||filterItem.type.toUpperCase()===item.toUpperCase()) {
+          if (
+            filterItem.name.toUpperCase().includes(item.toUpperCase()) ||
+            filterItem.gender.toUpperCase() === item.toUpperCase() ||
+            filterItem.type.toUpperCase() === item.toUpperCase() ||
+            filterItem.color.toUpperCase().includes(item.toUpperCase())
+          ) {
             return filterItem;
           }
+          return null;
         })
       );
       // console.log(foundData[1]);
       return foundData[1];
-
     };
     const searchItems =
       search.length > 0
@@ -35,9 +40,9 @@ const Products = () => {
           : filteritems.filter((item) => {
               return (
                 item.name.toUpperCase().indexOf(search.toUpperCase()) !== -1 ||
-                item.gender.toUpperCase().indexOf(search.toUpperCase()) !== -1||
+                item.gender.toUpperCase().indexOf(search.toUpperCase()) !==
+                  -1 ||
                 item.type.toUpperCase().indexOf(search.toUpperCase()) !== -1
-
               );
             })
         : filteritems;
