@@ -15,23 +15,12 @@ const Products = () => {
   const products = useMemo(() => {
     const filteritems = filterItem(data?.data, filterData);
     const searchItemsProduct = () => {
-      const searchStrArr = search.split(" ");
-
-      const foundData = searchStrArr.map((item) =>
-        filteritems.filter((filterItem) => {
-          if (
-            filterItem.name.toUpperCase().includes(item.toUpperCase()) ||
-            filterItem.gender.toUpperCase() === item.toUpperCase() ||
-            filterItem.type.toUpperCase() === item.toUpperCase() ||
-            filterItem.color.toUpperCase().includes(item.toUpperCase())
-          ) {
-            return filterItem;
-          }
-          return null;
-        })
-      );
-      // console.log(foundData[1]);
-      return foundData[1];
+      return filteritems.filter((filterItem) => {
+        if (filterItem.name.toUpperCase() === search.toUpperCase()) {
+          return filterItem;
+        }
+        return null;
+      });
     };
     const searchItems =
       search.length > 0
