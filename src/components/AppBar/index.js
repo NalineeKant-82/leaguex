@@ -30,7 +30,7 @@ const CustomeAppBar = () => {
           </Link>
           <Link style={{ textDecoration: "none", color: "black" }} to="/cart">
             <IconButton>
-              <Badge badgeContent={productDetail.length} color="primary">
+              <Badge badgeContent={productDetail?.length} color="primary">
                 <ShoppingCartOutlinedIcon />
               </Badge>
             </IconButton>

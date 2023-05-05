@@ -24,14 +24,11 @@ const Products = () => {
     };
     const searchItems =
       search.length > 0
-        ? search.includes(" ")
+        ? search.includes(" ") && search.indexOf(" ") !== search.length - 1
           ? searchItemsProduct()
           : filteritems.filter((item) => {
               return (
-                item.name.toUpperCase().indexOf(search.toUpperCase()) !== -1 ||
-                item.gender.toUpperCase().indexOf(search.toUpperCase()) !==
-                  -1 ||
-                item.type.toUpperCase().indexOf(search.toUpperCase()) !== -1
+                item.name.toUpperCase().indexOf(search.toUpperCase()) !== -1
               );
             })
         : filteritems;

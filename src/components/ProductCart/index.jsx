@@ -1,7 +1,18 @@
-import React from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import React, { useContext } from "react";
+import { Box, Button, Grid, MenuItem, Select, Typography } from "@mui/material";
+import Context from "../../Context";
+import { addToCart } from "../../utils/addToCart";
 
-const ProductCart = ({ product, onDelete }) => {
+const prodductCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const ProductCart = ({ product, onDelete, setPrice }) => {
+  const { setProductDetail } = useContext(Context);
+  const handleChange = (e) => {
+    setProductDetail((prev) =>
+      addToCart({ arr: prev, id: product.id, count: e.target.value })
+    );
+  };
+
   return (
     <Grid
       container
@@ -38,18 +49,11 @@ const ProductCart = ({ product, onDelete }) => {
           <Typography sx={{ fontWeight: 700 }}>{product.name}</Typography>
           <Typography sx={{ fontWeight: 700 }}>Rs {product.price}</Typography>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            border: "1px solid #c3c4c3",
-            borderRadius: "5px",
-            px: 1,
-            height: 37,
-          }}
-        >
-          <Typography>Qty: {product.count}</Typography>
-        </Box>
+        <Select value={product.count} label="Age" onChange={handleChange}>
+          {prodductCount.map((item) => (
+            <MenuItem value={item}>{item}</MenuItem>
+          ))}
+        </Select>
         <Box>
           <Button
             onClick={() => onDelete(product.id)}

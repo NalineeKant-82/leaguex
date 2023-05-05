@@ -1,10 +1,19 @@
 import { Box, Typography } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import ProductCart from "../../components/ProductCart";
 import Context from "../../Context";
 
 const Cart = () => {
   const { productDetail, setProductDetail } = useContext(Context);
+  const price = useMemo(
+    () =>
+      productDetail?.reduce(
+        (accumulator, currentValue) =>
+          currentValue.count * currentValue.price + accumulator,
+        0
+      ),
+    [productDetail]
+  );
 
   const onDelete = (id) => {
     setProductDetail((prev) => {
@@ -59,6 +68,18 @@ const Cart = () => {
                 <ProductCart onDelete={onDelete} product={product} />
               </Box>
             ))}
+            <Box>
+              <hr />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography sx={{ fontWeight: 800 }}>Total</Typography>
+                <Typography sx={{ fontWeight: 800 }}>{price}</Typography>
+              </Box>
+            </Box>
           </Box>
         </Box>
       </Box>

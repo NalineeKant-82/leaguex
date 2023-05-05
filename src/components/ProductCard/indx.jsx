@@ -1,27 +1,15 @@
 import React, { useContext } from "react";
 import { Box, Button, Card, Typography } from "@mui/material";
 import Context from "../../Context";
+import { addToCart } from "../../utils/addToCart";
 
 const ProductCard = ({ product }) => {
   const { setProductDetail } = useContext(Context);
 
   const onAddtoCard = () => {
-    setProductDetail((prev) => {
-      const prevArr = [...prev];
-      const index = prev.findIndex((item) => item.id === product.id);
-      if (index !== -1) {
-        if (prevArr[index].quantity === prevArr[index].count) {
-          alert(
-            `sorry you can't add more then${prevArr[index].quantity} quantity`
-          );
-        } else {
-          prevArr[index] = { ...product, count: prevArr[index].count + 1 };
-        }
-      } else {
-        prevArr.push({ ...product, count: 1 });
-      }
-      return prevArr;
-    });
+    setProductDetail((prev) =>
+      addToCart({ arr: prev, id: product.id, product })
+    );
   };
 
   return (
