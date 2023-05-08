@@ -33,9 +33,9 @@ const ProductCard = ({ product }) => {
           <Box sx={{ width: 0.5, textAlign: "center" }}>
             <Typography>{`Rs ${product?.price}`}</Typography>
           </Box>
-          <Typography>{product?.name}</Typography>
+          <Typography>{`${product?.gender} ${product?.name}`}</Typography>
           <Button onClick={onAddtoCard} sx={{ width: 0.5 }} variant="contained">
-            Add to card
+            Add to cart
           </Button>
         </Box>
       </Box>
